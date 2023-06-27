@@ -6,6 +6,8 @@ rm(list = ls())
 library(ggplot2)
 library(dplyr)
 
+#load from: 10.6084/m9.figshare.23587563
+
 df=read.csv("abund.giraffe.base.csv")
 
 # Plot mean abundance over time by age class
