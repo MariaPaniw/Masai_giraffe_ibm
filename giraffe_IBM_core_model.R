@@ -407,5 +407,5 @@ for(pu in 1:length(par.sub)){ # first loop: SIMULATIONS
   
 }
 
-# The output of this simulation is saved as "abund.giraffe.base.csv" 
-# and can be directly accessed on GitHub for plotting
+# The output of this simulation is saved as "abund.giraffe.base.csv" and is available here: 10.6084/m9.figshare.23587563
+# and can be directly accessed on FigShare for plotting
