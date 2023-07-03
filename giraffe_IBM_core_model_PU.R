@@ -1,3 +1,4 @@
+
 ### R script to construct and project giraffe IBM under parameter uncertainty
 ## R version 4.2.0
 # Code developed by Monica Bond, Maria Paniw, and Derek Lee 
