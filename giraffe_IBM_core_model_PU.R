@@ -19,10 +19,10 @@ colnames(inds)[3] <- "group"
 
 
 #########################################################################################
-# Model parameters based on Lee et al. 2016 (Ecol&Evol), Lee et al. 2017 (PopEcol), Bond et al. 2021 (JWM), 
-#   Bond et al. 2021 (JAE), Lee & Bond Tarangire book Ch 9, and Bond et al. in review (Bio&Cons)
-# Seasonal survival estimates based on season of birth = S higher when born in dry, then long, then short [Lee et al. 2017]
-# Calf survival varies by age, season of birth, and AFC [Lee et al. 2017, Bond et al. 2021 JWM]
+# Model parameters based on Bonenfant et al.(2009), Lee et al.(2016a,b), Lee et al.(2017), Bond et al.(2021a,b) 
+#   Lee & Bond(2022), Bond et al.(2023), 
+# Seasonal survival estimates based on season of birth = S higher when born in dry, then long, then short [Lee et al.(2017)]
+# Calf survival varies by age, season of birth, and AFC [Lee et al.(2017), Bond et al.(2021b)]
 
 #########################################################################################
 
@@ -75,8 +75,8 @@ for(ex in 1:length(par.sub)){
     beta2 <- rnorm(1,mean = -0.005, sd = 0.004) # effect of age2 [Lee et al. 2017]
     rain.beta <- rnorm(1,mean = 0.061, sd = 0.03)
     # beta3 is season of birth [Lee et al. 2017]
-    # com.effjuv is community effect [Bond et al. 2021 JWM]
-    # pred.eff is higher predation in short and long and lower predation in dry in TNP-no effect in MRC [Lee et al. 2016 E&E]
+    # com.effjuv is community effect [Bond et al. 2021b]
+    # pred.eff is higher predation in short and long and lower predation in dry in TNP-no effect in MRC [Lee et al. 2016b]
     
     eq.density=150
     if(density<eq.density){
@@ -100,19 +100,19 @@ for(ex in 1:length(par.sub)){
   
   survJuv <- function(age, age2, density, beta3, rain, com.effjuv){  
     
-    beta0 = 1  # intercept, changes with density dependence: intercept-0.25 is the reduction in S with density dependence
+    beta0 = 1  # intercept, changes with density dependence: intercept-0.7 is the reduction in S with density dependence
     beta1 <- rnorm(1,mean = 0.3, sd = 0.072)  # effect of age 
     beta2 <- rnorm(1,mean = -0.005, sd = 0.004) # effect of age2 
     rain.beta <- rnorm(1,mean = 0.061, sd = 0.03)
     # beta3 is season of birth
-    # com.effjuv is community effect [Bond et al. 2021 JWM]
+    # com.effjuv is community effect [Bond et al. 2021b]
     
     eq.density=150
     if(density<eq.density){
       mu.surv <- exp(beta0 + beta1*age + beta2*age2 + beta3 - rain.beta*rain) # rain [Bond et al. 2023]
     }else{
       
-      mu.surv <- exp(beta0 -0.7 + beta1*age + beta2*age2 + beta3 - rain.beta*rain)  # -0.25 reduces S at higher density
+      mu.surv <- exp(beta0 -0.7 + beta1*age + beta2*age2 + beta3 - rain.beta*rain)  # -0.7 reduces S at higher density
     }
     
     prob.surv=mu.surv/(1+mu.surv)
@@ -137,12 +137,12 @@ for(ex in 1:length(par.sub)){
       mu.surv <- exp(beta0 - rain.beta*rain)  # rain [Bond et al. 2023]
     }else{
       
-      mu.surv <- exp(beta0 -0.5 - rain.beta*rain)   # -0.1 reduces S at higher density
+      mu.surv <- exp(beta0 -0.5 - rain.beta*rain)   # -0.5 reduces S at higher density
     }
     
     prob.surv=mu.surv/(1+mu.surv)
     
-    # com.effaf is community effect [Bond et al. 2021 JWM]
+    # com.effaf is community effect [Bond et al. 2021b]
     
     prob.surv=prob.surv + com.effaf
     prob.surv[prob.surv>1]=1
@@ -154,14 +154,15 @@ for(ex in 1:length(par.sub)){
   
   
   com.effjuv.vec=c(rtruncnorm(1, a=0.001, b=0.99, mean = 0.046, sd = 0.002),rtruncnorm(1, a=0.001, b=0.99, mean = 0.036, sd = 0.002),rtruncnorm(1, a=0.001, b=0.99, mean = 0.046, sd = 0.002),rtruncnorm(1, a=0.001, b=0.99, mean = 0.036, sd = 0.002),rtruncnorm(1, a=0.001, b=0.99, mean = 0.006, sd = 0.002),
-                   rtruncnorm(1, a=(-0.99), b=0, mean = -0.074, sd = 0.002),rtruncnorm(1, a=(-0.99), b=0, mean = -0.034, sd = 0.002),rtruncnorm(1, a=(-0.99), b=0, mean = -0.044, sd = 0.002),rtruncnorm(1, a=(-0.99), b=0, mean = -0.015, sd = 0.002)) # adjust juv S so 6&8 do not crash and 9&7 are more stable
-  #com.effaf.vec=c(0.01,0,0,0.02,0.01,0.02,0.03,0.01,0.03) # AF differs among communities [S from MARK results; Bond et al. 2021 JWM]
-  com.effaf.vec=c(rtruncnorm(1, a=0.001, b=0.99, mean = 0.005, sd = 0.0002),0,0,rtruncnorm(1, a=0.001, b=0.99, mean = 0.0075, sd = 0.0002),rtruncnorm(1, a=0.001, b=0.99, mean = 0.005, sd = 0.0002),rtruncnorm(1, a=0.001, b=0.99, mean = 0.0075, sd = 0.0002),rtruncnorm(1, a=0.001, b=0.99, mean = 0.01, sd = 0.0002),rtruncnorm(1, a=0.001, b=0.99, mean = 0.005, sd = 0.0002),rtruncnorm(1, a=0.001, b=0.99, mean = 0.01, sd = 0.0002)) # adjust ad S so high S pops do not explode
+                   rtruncnorm(1, a=(-0.99), b=0, mean = -0.074, sd = 0.002),rtruncnorm(1, a=(-0.99), b=0, mean = -0.034, sd = 0.002),rtruncnorm(1, a=(-0.99), b=0, mean = -0.044, sd = 0.002),rtruncnorm(1, a=(-0.99), b=0, mean = -0.015, sd = 0.002)) 
+ 
+  # AF differs among communities [S from MARK results; Bond et al. 2021b]
+  com.effaf.vec=c(rtruncnorm(1, a=0.001, b=0.99, mean = 0.005, sd = 0.0002),0,0,rtruncnorm(1, a=0.001, b=0.99, mean = 0.0075, sd = 0.0002),rtruncnorm(1, a=0.001, b=0.99, mean = 0.005, sd = 0.0002),rtruncnorm(1, a=0.001, b=0.99, mean = 0.0075, sd = 0.0002),rtruncnorm(1, a=0.001, b=0.99, mean = 0.01, sd = 0.0002),rtruncnorm(1, a=0.001, b=0.99, mean = 0.005, sd = 0.0002),rtruncnorm(1, a=0.001, b=0.99, mean = 0.01, sd = 0.0002)) 
   
   # Vector of community and seasonal specific modifications to juvenile survival due to predation
   
   pred.eff.pu=rtruncnorm(1, a=(-0.99), b=0, mean = -0.1, sd = 0.06)
-  pred.eff.vec=c(pred.eff.pu,0,0,0,pred.eff.pu,pred.eff.pu,pred.eff.pu,pred.eff.pu,pred.eff.pu)  # predation higher in TNP in long and short rains [Lee et al. 2016 E&E]
+  pred.eff.vec=c(pred.eff.pu,0,0,0,pred.eff.pu,pred.eff.pu,pred.eff.pu,pred.eff.pu,pred.eff.pu)  # predation higher in TNP in long and short rains [Lee et al. 2016b]
   
   pred.eff.puV2=rtruncnorm(1, a=0.001, b=0.99, mean = 0.03, sd = 0.007)
   pred.eff.vecV2=c(pred.eff.puV2,0,0,0,pred.eff.puV2,pred.eff.puV2,pred.eff.puV2,pred.eff.puV2,pred.eff.puV2)  # predation lower in TNP in dry 
@@ -176,7 +177,7 @@ for(ex in 1:length(par.sub)){
     DATA.G=DATA.G[,c("ID","age","repCount","season","SOB","group")] 
     
     
-    for(i in 1:(seasons-1)){ # second loop: seasons
+    for(i in 1:(seasons-1)){ # second loop: SEASONS
       
       
       DISP=NULL
@@ -281,7 +282,7 @@ for(ex in 1:length(par.sub)){
         DATA$age=DATA$age+1
         DATA$season=DATA$season+1
         
-        ## Update RepCount: repCount goes down by one each time step until 0, then goes to 5 and repeat
+        ## Update RepCount: repCount goes down by one each time step until 0, then goes to 6 and repeat
         
         DATA$repCount[DATA$repCount%in%0] <-6
         DATA$repCount <- DATA$repCount-1
