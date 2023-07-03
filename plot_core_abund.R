@@ -29,12 +29,6 @@ abund.class <- ggplot(data=mean.size,aes(TIME.SIM,ID,col=group,group=group,fill=
   theme_bw(base_size = 20)+ 
   labs(col='Social Community') + labs(fill='Social Community')
 
-#to match Fig 1b which is a color for each social community
-abund.class + scale_color_manual(values=c("#E69F00", "#663300", "#009E73", "#D55E00",
-                                          "#F0E442", "#9966CC", "#00ffff", "#0072B2",
-                                          "#CC79A7"))+ scale_fill_manual(values=c("#E69F00", "#663300", "#009E73", "#D55E00",
-                                                                                  "#F0E442", "#9966CC", "#00ffff", "#0072B2",
-                                                                                  "#CC79A7"))
 
 #  Plot mean total abundance over time
 
@@ -53,6 +47,4 @@ tot.abundance <- ggplot(data=mean.size.all,aes(TIME.SIM,ID,col=group,group=group
   labs(col='Social Community',fill='Social Community')+ 
   theme_bw(base_size = 20)
 
-tot.abundance + scale_color_manual(values=c("#E69F00", "#663300", "#009E73", "#D55E00",
-                                            "#F0E442", "#9966CC", "#00ffff", "#0072B2",
-                                            "#CC79A7"))
+
