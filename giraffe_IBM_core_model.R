@@ -29,9 +29,7 @@
 
 # Maximum age = 87 seasons (equates to 30 years).
 
-# Some SA4 (age 13 seasons = 4 yr) switch AFCs for natal dispersal. We code a 0.13 probability for SA4s to transition to a new AFC 
-#    based on Bond et al.(2021d). We will code zero movements between MRC (2,3,4) and TNP SC2&3 (1,5,6,7,8,9) with barrier perturbations
-
+# Some SA4 (age 13 seasons = 4 yr) switch AFCs for natal dispersal.
 # Include effects on S of covariates of predation pressure and rain.
 
 # clear 
@@ -80,7 +78,7 @@ colnames(inds)[3] <- "group"
 
 #########################################################################################
 # Model parameters based on Bonenfant et al.(2009), Lee et al.(2016a,b), Lee et al.(2017), Bond et al.(2021a,b) 
-#   Lee & Bond(2022), Bond et al.(2023), 
+#   Lee & Bond(2022), Bond et al.(2023) 
 # Seasonal survival estimates based on season of birth = S higher when born in dry, then long, then short [Lee et al.(2017)]
 # Calf survival varies by age, season of birth, and AFC [Lee et al.(2017), Bond et al.(2021b)]
 
@@ -123,7 +121,7 @@ survJuv <- function(age, age2, density, beta3, rain, com.effjuv){
   beta1 <- 0.3  # effect of age
   beta2 <- -0.005  # effect of age2
   # beta3 is season of birth
-  # com.effjuv is community effect [Bond et al. 2021 JWM]
+  # com.effjuv is community effect [Bond et al.2021b]
   
   eq.density=150
   if(density<eq.density){
@@ -199,12 +197,12 @@ rain.obs=read.csv("rainfall_now.csv")  # load observed rainfall anomalies
 
 # Vectors of community modifications to juvenile and adult survival
 
-com.effjuv.vec=c(0.046,0.036,0.046,0.036,0.006,-0.074,-0.034,-0.044,-0.015) # [Bond et al. 2021 JWM]
-com.effaf.vec=c(0.005,0,0,0.0075,0.005,0.0075,0.01,0.005,0.01) # [MARK results and Bond et al. 2021 JWM]
+com.effjuv.vec=c(0.046,0.036,0.046,0.036,0.006,-0.074,-0.034,-0.044,-0.015) # [Bond et al.2021b]
+com.effaf.vec=c(0.005,0,0,0.0075,0.005,0.0075,0.01,0.005,0.01) # [MARK results and Bond et al.2021b]
 
 # Vector of community and seasonal specific modifications to juvenile survival due to predation
 
-pred.eff.vec=c(-0.1,0,0,0,-0.1,-0.1,-0.1,-0.1,-0.1)  # predation higher in TNP in long and short rains [Lee et al. 2016 E&E]
+pred.eff.vec=c(-0.1,0,0,0,-0.1,-0.1,-0.1,-0.1,-0.1)  # predation higher in TNP in long and short rains [Lee et al.2016b]
 pred.eff.vecV2=c(0.03,0,0,0,0.03,0.03,0.03,0.03,0.03)  # predation lower in TNP in dry 
 
 
