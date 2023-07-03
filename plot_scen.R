@@ -137,7 +137,7 @@ ggplot(data=sub.mu,aes(TIME.SIM,ID,col=scen,group=scen,fill=scen))+
   theme_bw(base_size = 20)
 
 
-# Climate (effect is not clear if you consider CI - and this is pretty much what the other plots shows)
+# Climate
 
 sub=abund[abund$scen%in%c("1_control","12_rain10","13_rain25"),]
 
