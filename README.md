@@ -52,7 +52,7 @@ SHARING/ACCESS INFORMATION
 	Sources (for rainfall data): USGS Earth Resources Observation and Science (EROS) Center (https://earlywarning.usgs.gov/fews) 
 
 7. Recommended citation for this dataset: 
-Bond, M. L., Lee, D. E., Paniw, M. (2023). Data from: Extinction risks and mitigation for a megaherbivore, the giraffe, in a human-influenced landscape under climate change. [![DOI](https://zenodo.org/badge/128234080.svg)](https://zenodo.org/badge/latestdoi/128234080)
+Bond, M. L., Lee, D. E., Paniw, M. (2023). Data from: Extinction risks and mitigation for a megaherbivore, the giraffe, in a human-influenced landscape under climate change. [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.8371784.svg)](https://doi.org/10.5281/zenodo.8371784)
 
 DATa & FILE OVERVIEW & WORKFLOW OF R SCRIPTS: 
 
